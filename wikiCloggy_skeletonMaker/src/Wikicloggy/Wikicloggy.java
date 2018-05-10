@@ -19,7 +19,7 @@ public class Wikicloggy extends Frame {
 		super(title);
 		
 		
-		File f = new File("./images/dog_test2.png");
+		File f = new File("../darkflow/result/result.png");
 		img = ImageIO.read(f);
 		
 		

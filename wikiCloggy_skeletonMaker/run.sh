@@ -1,2 +1,2 @@
 #!/bin/sh
-java  -cp bin Wikicloggy.Wikicloggy
+java  -cp ../wikiCloggy_skeletonMaker/bin Wikicloggy.Wikicloggy
