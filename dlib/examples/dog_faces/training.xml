@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name>imglab dataset</name>
+<comment>Created by imglab tool.</comment>
+<images>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog12.jpg'>
+    <box top='44' left='169' width='37' height='51'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog13.jpg'>
+    <box top='81' left='131' width='53' height='71'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog14.jpg'>
+    <box top='54' left='181' width='77' height='105'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog15.jpg'>
+    <box top='74' left='105' width='68' height='75'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog16.jpeg'>
+    <box top='36' left='16' width='31' height='36'/>
+    <box top='45' left='133' width='31' height='28'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog17.jpg'>
+    <box top='27' left='226' width='43' height='52'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog18.jpg'>
+    <box top='32' left='189' width='50' height='39'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog19.jpg'>
+    <box top='33' left='168' width='64' height='72'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog20.jpg'>
+    <box top='54' left='106' width='127' height='164'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog21.jpg'>
+    <box top='20' left='244' width='52' height='66'/>
+    <box top='153' left='227' width='50' height='55'/>
+    <box top='112' left='128' width='41' height='45'/>
+    <box top='131' left='35' width='38' height='50'/>
+    <box top='171' left='334' width='45' height='57'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog22.jpg'>
+    <box top='68' left='135' width='68' height='91'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog23.JPG'>
+    <box top='357' left='584' width='124' height='136'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog24.jpg'>
+    <box top='65' left='255' width='49' height='56'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog25.jpeg'>
+    <box top='56' left='34' width='40' height='34'/>
+    <box top='38' left='81' width='42' height='29'/>
+    <box top='25' left='130' width='38' height='32'/>
+    <box top='27' left='191' width='35' height='34'/>
+    <box top='41' left='247' width='39' height='31'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog26.jpg'>
+    <box top='50' left='165' width='54' height='86'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog27.jpg'>
+    <box top='40' left='72' width='77' height='96'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog28.jpg'>
+    <box top='125' left='159' width='63' height='67'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog29.jpg'>
+    <box top='62' left='101' width='100' height='107'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog3.jpeg'>
+    <box top='94' left='84' width='21' height='18'/>
+    <box top='65' left='117' width='26' height='29'/>
+    <box top='48' left='175' width='20' height='23'/>
+    <box top='37' left='224' width='23' height='28'/>
+    <box top='13' left='266' width='23' height='29'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog30.jpeg'>
+    <box top='45' left='131' width='58' height='54'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog31.jpg'>
+    <box top='29' left='112' width='105' height='114'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog4.jpeg'>
+    <box top='65' left='119' width='40' height='45'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog5.jpg'>
+    <box top='122' left='133' width='106' height='100'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog6.jpeg'>
+    <box top='121' left='82' width='112' height='107'/>
+    <box top='137' left='324' width='110' height='111'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dog7.jpg'>
+    <box top='110' left='192' width='70' height='57'/>
+    <box top='83' left='326' width='69' height='45'/>
+  </image>
+  <image file='/home/seoyunkyung/WikiCloggy_skeletonMaker/dlib/tools/imglab/tmp/dogs.jpg'>
+    <box top='169' left='134' width='187' height='180'/>
+    <box top='161' left='562' width='184' height='162'/>
+    <box top='636' left='590' width='184' height='184'/>
+    <box top='624' left='158' width='155' height='148'/>
+  </image>
+</images>
+</dataset>
