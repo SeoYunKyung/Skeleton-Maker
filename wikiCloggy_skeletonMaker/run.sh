@@ -1,2 +1,3 @@
 #!/bin/sh
-java  -cp ../wikiCloggy_skeletonMaker/bin Wikicloggy.Wikicloggy
+cd ./bin
+java Wikicloggy.Wikicloggy
