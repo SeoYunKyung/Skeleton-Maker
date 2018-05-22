@@ -38,58 +38,43 @@ If you find this code useful in your research/software, please consider citing t
  
  **************************************************************************************************
  **************************************************************************************************/
-package imageOp.skeleton;
+package Wikicloggy;
 
 /** Light point class for skeleton package */
-public class Point {
+public class PartsPoints {
 
   public int x;
   public int y;
+  public String tag;
   
  
-  public Point() {
+  public PartsPoints() {
     x = -1; y = -1;
+    tag = "none";
    
     
   }
-  public Point( int _x, int _y ) {
+  public PartsPoints( int _x, int _y ) {
     x = _x; y = _y;
+    tag = "none";
    
   }
-  Point( Point oPt ) {
-    x = oPt.x; y = oPt.y;
+  public PartsPoints( int _x, int _y ,String _tag) {
+    x = _x; y = _y;
+    tag = _tag;
    
   }
-  public void set( int _x, int _y ) {
+  
+  public void setPoint( int _x, int _y ) {
     x = _x; y = _y;
    
     return;
   }
-  Point sub( Point oPt ) {
-    Point res = new Point( this );
-    res.x -= oPt.x;
-    res.y -= oPt.y;
-
-    return res;
+   public void setTag( String _tag ) {
+    tag = _tag;
+   
+    return;
   }
-  
-  Point add(Point oPt) {
-	  Point res = new Point(this);
-	  res.x += oPt.x;
-	  res.y += oPt.y;
-
-	  return res;
-  }
-  public int innerProd( Point oPt ) {
-    return x*oPt.x + y*oPt.y;
-  }
-  public int distanceSq( Point oPt ) {
-    return (x - oPt.x)*(x - oPt.x) +
-      (y - oPt.y)*(y - oPt.y);
-  }
-  public int manhattanDist( Point oPt ) {
-    return Math.max(Math.abs(x - oPt.x),Math.abs(y - oPt.y));
-  }
-
+ 
 }
 

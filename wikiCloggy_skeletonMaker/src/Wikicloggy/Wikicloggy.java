@@ -24,8 +24,14 @@ import imageOp.skeleton.ASkeletonPrunningOp;
 import imageOp.skeleton.ASIMA;
 import imageOp.skeleton.Point;
 
+import Wikicloggy.PartsPoints;
+
 
 import javax.imageio.ImageIO;
+
+/* Be sure that branch points/ end points (x,y) coordinate is swapped
+   I mean y is x and x is y 
+	@@@@@@ NOT SKELETON POINTS @@@@@*/
 
 
 public class Wikicloggy extends JPanel{
@@ -35,15 +41,11 @@ public class Wikicloggy extends JPanel{
 	int bottom; //point of bottom of head
 	int right; //point of right of head
 	int left; //point of left of head
-	ArrayList<Wikicloggy.PartsPoints> pp; // each points with tags
+	ArrayList<PartsPoints> pp = new ArrayList<PartsPoints>(); // each points with tags
 	ArrayList<Point> branch = new ArrayList<Point>(); // branch points of skeleton 
 	ArrayList<Point> end = new ArrayList<Point>(); //end points of skeleton
+	ArrayList<Point> skeleton = new ArrayList<Point>(); //skeleton points 
 	BufferedImage result_cloggy = null; // result of skelelton image
-
-	class PartsPoints{ // points with tag
-		String tag = "none";
-		Point point= new Point();
-	}	
 	
 	public Wikicloggy(String title) throws IOException {	
 		
@@ -123,9 +125,30 @@ public class Wikicloggy extends JPanel{
 			System.out.println("End num : "+ i+" x : "+wc.end.get(i).y+" y : "+wc.end.get(i).x);
 			
 		}*/
+		wc.skeleton = _asima.getSkeletonPoints();
+		for (int i = 0; i<wc.skeleton.size();i++){
+			PartsPoints tmp_ppt = new PartsPoints();
+			tmp_ppt.setPoint(wc.skeleton.get(i).y,wc.skeleton.get(i).x);
+			wc.pp.add(tmp_ppt);
+		}			
+
+		for (int i = 0; i<wc.skeleton.size();i++){
+			if ((wc.pp.get(i).y < wc.bottom) && (wc.pp.get(i).y > wc.top) && (wc.pp.get(i).x > wc.left) && (wc.pp.get(i).x < wc.right)){
+				wc.pp.get(i).setTag("head");	
+				System.out.println(wc.pp.get(i).tag);	
+			}
+			System.out.println(wc.pp.get(i).x + " "+wc.pp.get(i).y +" "+wc.pp.get(i).tag);
+		}	
+		System.out.println("TopLeft : ("+wc.left+","+wc.top+") "+"TopRight : ("+wc.right+","+wc.top+")"+ "BottomLeft : ("+wc.left+","+wc.bottom+")"+ "BottomRight : ("+wc.right+","+wc.bottom+")"); 
+		for (int i = 0; i<wc.skeleton.size();i++){
+			if (wc.pp.get(i).tag.equals("head")){
+				System.out.println("HEAD / x :" + wc.pp.get(i).y + " y:" + wc.pp.get(i).x);			
+			}
+		}			
+		
+
 
 		//show each pts and skeleton of dog
-		
 		JFrame frm = new JFrame("dog skeleton");
 		ImageIcon ic = new ImageIcon(wc.result_cloggy);
 		JLabel iblImage1 = new JLabel(ic);
@@ -150,13 +173,21 @@ public class Wikicloggy extends JPanel{
 	public void paint(Graphics g){
 		
 		g.drawImage((Image)this.result_cloggy,0,0,null);
+		g.setColor(Color.red);
 		for (int i = 0; i<this.branch.size();i++){
-			g.setColor(Color.red);
+			
 			g.drawOval(this.branch.get(i).y,this.branch.get(i).x,5,5);
 		}
+		g.setColor(Color.cyan);
 		for (int i = 0; i<this.end.size();i++){
-			g.setColor(Color.cyan);
+			
 			g.drawOval(this.end.get(i).y,this.end.get(i).x,5,5);
+		}
+		g.setColor(Color.orange);
+		for (int i = 0; i<this.pp.size();i++){
+			if(this.pp.get(i).tag.equals("head")){			
+				g.drawOval(this.pp.get(i).x,this.pp.get(i).y,5,5);
+			}		
 		}
 		g.setColor(Color.pink);
 		g.drawOval(this.left,this.top,5,5);
