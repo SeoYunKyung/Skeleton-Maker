@@ -161,6 +161,9 @@ public class ASkeletonPrunningOp extends FeatureTransformOp {
 		return result;
 	}
 	
+	public ASIMA getASIMA(){
+		return this._asima;	
+	}
 
 	public String toString() {
 		return "ASM Skeleton-Prunning";
