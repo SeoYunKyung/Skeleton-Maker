@@ -38,3 +38,24 @@ class DogDetector(BaseClassSingleton):
         if (y + height) >= imgHeight:
             height = imgHeight - y - 1
         return (x, y, width, height)
+
+    def getDogPartRect(self, result, originalImg):
+        t = result.top()
+        l = result.left()
+        b = result.bottom()
+        r = result.right()
+
+        print ( t, l, b, r)
+       
+        x = max(l - round(_ERROR_PIXEL / 2), 0)
+        y = max(t - round(_ERROR_PIXEL / 2), 0)
+        width = r - l + _ERROR_PIXEL
+        height = b - t + _ERROR_PIXEL
+
+        imgHeight, imgWidth = originalImg.shape[:2]
+
+        if (x + width) >= imgWidth:
+            width = imgWidth - x - 1
+        if (y + height) >= imgHeight:
+            height = imgHeight - y - 1
+        return (x, y, width, height)
