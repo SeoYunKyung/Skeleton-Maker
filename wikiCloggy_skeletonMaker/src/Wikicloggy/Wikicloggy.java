@@ -2,6 +2,7 @@ package Wikicloggy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -13,12 +14,10 @@ import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Dimension;
+import java.awt.Component;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import imageOp.skeleton.ASkeletonPrunningOp;
 import imageOp.skeleton.ASIMA;
@@ -37,6 +36,9 @@ import javax.imageio.ImageIO;
 public class Wikicloggy extends JPanel{
 	
 	BufferedImage img = null;
+	BufferedImage save_image = null;
+	JFrame frm =null;
+	String file_name =null;
 	int top; // point of top of head
 	int bottom; //point of bottom of head
 	int right; //point of right of head
@@ -47,9 +49,23 @@ public class Wikicloggy extends JPanel{
 	ArrayList<Point> skeleton = new ArrayList<Point>(); //skeleton points 
 	BufferedImage result_cloggy = null; // result of skelelton image
 	
+	/*
 	public Wikicloggy(String title) throws IOException {	
 		
 		File f = new File("../result/result.png");
+		this.img= ImageIO.read(f);
+		this.top =0;
+		this.bottom =0;
+		this.right =0;
+		this.left =0;		
+		
+		if(img==null){
+		   System.out.println("No Image\n");
+		   return;		
+		}*/
+	public Wikicloggy(String title,String filepath) throws IOException {	
+		
+		File f =new File(filepath);
 		this.img= ImageIO.read(f);
 		this.top =0;
 		this.bottom =0;
@@ -63,13 +79,118 @@ public class Wikicloggy extends JPanel{
 				
 		
 	}
+
+	
+	public static ArrayList<HashMap<String,String>> getPhotoList(String path){
+		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+		File dirFile = new File(path);
+		if(dirFile.exists() && dirFile.isDirectory()){
+			File[] fileList =dirFile.listFiles();
+			for (File tempFile : fileList) {
+				if(tempFile.isFile() && tempFile.length() > 0){
+					String tempPath = tempFile.getParent();
+					String fileFullName = tempFile.getName();
+					String onlyFileName = fileFullName.toLowerCase().substring(0,fileFullName.lastIndexOf("."));
+					HashMap<String, String> photo = new HashMap<String,String>();
+					photo.put("fullname",fileFullName);
+					photo.put("filename",onlyFileName);
+					list.add(photo);				
+				}
+			}
+		}
+		return list;
+	}
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
-		Wikicloggy wc = new Wikicloggy("result_cloggy");		
-		File rect_txt = new File("../result/result.txt");
+		//File f = new File(args[0]);
+		ArrayList<HashMap<String,String>> list = getPhotoList(args[0]);
+		for(int i =0; i<list.size();i++){
+			System.out.println(list.get(i).get("fullname"));
+			Wikicloggy wc = new Wikicloggy("result_cloggy","../exciting/"+list.get(i).get("fullname"));
+			wc.file_name = list.get(i).get("filename");		
+			//File rect_txt = new File("../result/result.txt");
 		
+			//Skeleton Pruning
+			ASkeletonPrunningOp ASIP = new ASkeletonPrunningOp(wc.img);
+			wc.result_cloggy = wc.make_skeleton(ASIP,wc.img);
+		
+
+			//wc.setHeadBox(rect_txt);
+			wc.getEachskeletonInfo(ASIP);
+			wc.makeSkeletonTextFile();			
+		
+		
+			//show each pts and skeleton of dog
+			wc.frm = new JFrame("dog skeleton");
+			ImageIcon ic = new ImageIcon(wc.result_cloggy);
+			JLabel iblImage1 = new JLabel(ic);
+
+			wc.frm.add(iblImage1);
+			wc.frm.add(wc);
+			wc.frm.setVisible(true);
+			wc.frm.setSize(wc.result_cloggy.getWidth(),wc.result_cloggy.getHeight()+20);
+			wc.frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+			wc.SaveScreenShot(wc.frm,"../final2/exciting/"+wc.file_name);
+		}
+	
+	}
+
+	public void getEachskeletonInfo(ASkeletonPrunningOp ASIP){
+		//Take BranchPts from asima
+		ASIMA _asima= ASIP.getASIMA();
+		this.branch = _asima.getBranchPoints();
+		/*for (int i = 0; i<wc.branch.size();i++){
+			System.out.println("Branch num : "+ i+" x : "+wc.branch.get(i).y+" y : "+wc.branch.get(i).x);
+			
+		}*/
+
+		//Take EndPts from asima
+		this.end = _asima.getEndPoints();
+		/*for (int i = 0; i<wc.end.size();i++){
+			System.out.println("End num : "+ i+" x : "+wc.end.get(i).y+" y : "+wc.end.get(i).x);
+			
+		}*/
+		this.skeleton = _asima.getSkeletonPoints();
+		for (int i = 0; i<this.skeleton.size();i++){
+			PartsPoints tmp_ppt = new PartsPoints();
+			tmp_ppt.setPoint(this.skeleton.get(i).y,this.skeleton.get(i).x);
+			this.pp.add(tmp_ppt);
+		}			
+
+		for (int i = 0; i<this.skeleton.size();i++){
+			if ((this.pp.get(i).y < this.bottom) && (this.pp.get(i).y > this.top) && (this.pp.get(i).x > this.left) && (this.pp.get(i).x < this.right)){
+				this.pp.get(i).setTag("head");	
+			}
+			//System.out.println(this.pp.get(i).x + " "+this.pp.get(i).y +" "+this.pp.get(i).tag);
+		}		
+	}
+
+	public void makeSkeletonTextFile(){
+		 try {
+      			////////////////////////////////////////////////////////////////
+      			BufferedWriter out = new BufferedWriter(new FileWriter("../final/"+this.file_name+".txt"));
+			for (int i = 0; i<this.skeleton.size();i++){
+				out.write(Integer.toString(this.pp.get(i).x));
+				out.write(" ");
+				out.write(Integer.toString(this.pp.get(i).y));
+				out.write(" ");
+				out.write(this.pp.get(i).tag);
+				out.newLine();
+			}	
+			
+			out.close();
+		}
+		catch(IOException e){
+			System.err.println(e);
+			System.exit(1);	
+		}
+
+	}
+	public void setHeadBox(File rect_txt){
+	
 		String[] rect_info = null;
 		String text = null;
 		int[] rect =new int[4];
@@ -90,75 +211,21 @@ public class Wikicloggy extends JPanel{
 		    System.err.println(e);
 		    System.exit(1);
 		}
-		
+		this.file_name = rect_info[rect_info.length-1];
 		int j=0;
 		for(int i =0; i<rect_info.length;i++){
 		    if( i % 2 == 1){
 			rect[j]=Integer.parseInt(rect_info[i]);
-			System.out.println(rect[j]);
 			j++;
 		    }
 		}
 	
 		//head_box[ top, left, bottom, right]
-		wc.top = rect[0]; 
-		wc.left = rect[1];
-		wc.bottom = rect[2];
-		wc.right = rect[3];
+		this.top = rect[0]; 
+		this.left = rect[1];
+		this.bottom = rect[2];
+		this.right = rect[3];
 
-		//Skeleton Pruning
-		ASkeletonPrunningOp ASIP = new ASkeletonPrunningOp(wc.img);
-		wc.result_cloggy = wc.make_skeleton(ASIP,wc.img);
-		
-
-		//Take BranchPts from asima
-		ASIMA _asima= ASIP.getASIMA();
-		wc.branch = _asima.getBranchPoints();
-		/*for (int i = 0; i<wc.branch.size();i++){
-			System.out.println("Branch num : "+ i+" x : "+wc.branch.get(i).y+" y : "+wc.branch.get(i).x);
-			
-		}*/
-
-		//Take EndPts from asima
-		wc.end = _asima.getEndPoints();
-		/*for (int i = 0; i<wc.end.size();i++){
-			System.out.println("End num : "+ i+" x : "+wc.end.get(i).y+" y : "+wc.end.get(i).x);
-			
-		}*/
-		wc.skeleton = _asima.getSkeletonPoints();
-		for (int i = 0; i<wc.skeleton.size();i++){
-			PartsPoints tmp_ppt = new PartsPoints();
-			tmp_ppt.setPoint(wc.skeleton.get(i).y,wc.skeleton.get(i).x);
-			wc.pp.add(tmp_ppt);
-		}			
-
-		for (int i = 0; i<wc.skeleton.size();i++){
-			if ((wc.pp.get(i).y < wc.bottom) && (wc.pp.get(i).y > wc.top) && (wc.pp.get(i).x > wc.left) && (wc.pp.get(i).x < wc.right)){
-				wc.pp.get(i).setTag("head");	
-				System.out.println(wc.pp.get(i).tag);	
-			}
-			System.out.println(wc.pp.get(i).x + " "+wc.pp.get(i).y +" "+wc.pp.get(i).tag);
-		}	
-		System.out.println("TopLeft : ("+wc.left+","+wc.top+") "+"TopRight : ("+wc.right+","+wc.top+")"+ "BottomLeft : ("+wc.left+","+wc.bottom+")"+ "BottomRight : ("+wc.right+","+wc.bottom+")"); 
-		for (int i = 0; i<wc.skeleton.size();i++){
-			if (wc.pp.get(i).tag.equals("head")){
-				System.out.println("HEAD / x :" + wc.pp.get(i).y + " y:" + wc.pp.get(i).x);			
-			}
-		}			
-		
-
-
-		//show each pts and skeleton of dog
-		JFrame frm = new JFrame("dog skeleton");
-		ImageIcon ic = new ImageIcon(wc.result_cloggy);
-		JLabel iblImage1 = new JLabel(ic);
-
-		frm.add(iblImage1);
-		frm.add(wc);
-		frm.setVisible(true);
-		frm.setSize(wc.result_cloggy.getWidth(),wc.result_cloggy.getHeight());
-		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
 	}
 
 	public BufferedImage make_skeleton(ASkeletonPrunningOp ASIP, BufferedImage img){
@@ -194,10 +261,25 @@ public class Wikicloggy extends JPanel{
 		g.drawOval(this.left,this.bottom,5,5);
 		g.drawOval(this.right,this.top,5,5);
 		g.drawOval(this.right,this.bottom,5,5);
+
+		
+	
 	}
 
+	public static BufferedImage getScreenShot(Component component){
+		BufferedImage image = new BufferedImage(component.getWidth(), component.getHeight(),BufferedImage.TYPE_INT_RGB);
+		component.paint(image.getGraphics());
+		return image;
+	}	
 	
-	
-	
+	public static void SaveScreenShot( Component component, String filename){
+		BufferedImage img = getScreenShot(component);
+		try{
+			ImageIO.write(img,"png",new File(filename));
+		}
+		catch(IOException e){
+			System.out.println(""+e.toString());
+		}	
+	}
 	
 }

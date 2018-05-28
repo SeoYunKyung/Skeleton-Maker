@@ -1,3 +1,3 @@
 #!/bin/sh
 cd ./bin
-java Wikicloggy.Wikicloggy
+java Wikicloggy.Wikicloggy ../exiting 

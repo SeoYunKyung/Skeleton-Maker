@@ -1,0 +1,1 @@
+t 26 l 104 b 90 r 168 dog_test
