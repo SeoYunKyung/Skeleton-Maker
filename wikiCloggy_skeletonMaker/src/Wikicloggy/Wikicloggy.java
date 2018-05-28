@@ -139,7 +139,7 @@ public class Wikicloggy extends JPanel{
 				Thread.sleep(1000);
 			}catch(InterruptedException e){}
 						
-			wc.SaveScreenShot(wc.frm,"../final2/exciting/"+wc.file_name);
+			wc.SaveScreenShot(wc.frm,"../final2/exciting/"+wc.file_name+".png");
 			wc.frm.dispose();
 		}
 		
