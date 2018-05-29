@@ -107,7 +107,7 @@ public class Wikicloggy extends JPanel{
 		ArrayList<HashMap<String,String>> list = getPhotoList(args[0]);
 		for(int i =0; i<list.size();i++){
 			System.out.println(list.get(i).get("fullname"));
-			Wikicloggy wc = new Wikicloggy("result_cloggy","../exiting/"+list.get(i).get("fullname"));
+			Wikicloggy wc = new Wikicloggy("result_cloggy","../very_aggressive/"+list.get(i).get("fullname"));
 			wc.file_name = list.get(i).get("filename");		
 			//File rect_txt = new File("../result/result.txt");
 		
@@ -141,7 +141,7 @@ public class Wikicloggy extends JPanel{
 				Thread.sleep(1000);
 			}catch(InterruptedException e){}
 						
-			wc.SaveScreenShot(wc.frm,"../final2/exciting/"+wc.file_name+".png");
+			wc.SaveScreenShot(wc.frm,"../final2/very_aggressive/"+wc.file_name+".png");
 			wc.frm.dispose();
 		}
 		
