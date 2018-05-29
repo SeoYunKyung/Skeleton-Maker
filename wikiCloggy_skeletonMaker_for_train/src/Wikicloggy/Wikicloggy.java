@@ -107,7 +107,7 @@ public class Wikicloggy extends JPanel{
 		ArrayList<HashMap<String,String>> list = getPhotoList(args[0]);
 		for(int i =0; i<list.size();i++){
 			System.out.println(list.get(i).get("fullname"));
-			Wikicloggy wc = new Wikicloggy("result_cloggy","../very_aggressive/"+list.get(i).get("fullname"));
+			Wikicloggy wc = new Wikicloggy("result_cloggy","../butt_scooting/"+list.get(i).get("fullname"));
 			wc.file_name = list.get(i).get("filename");		
 			//File rect_txt = new File("../result/result.txt");
 		
@@ -134,14 +134,14 @@ public class Wikicloggy extends JPanel{
 			//wc.frm.add(iblImage1);
 			wc.frm.add(wc);
 												
-			wc.frm.setSize(wc.result_cloggy.getWidth(),wc.result_cloggy.getHeight()+50);
+			wc.frm.setSize(wc.result_cloggy.getWidth(),wc.result_cloggy.getHeight());
 			wc.frm.setVisible(true);
 				
 			try{
 				Thread.sleep(1000);
 			}catch(InterruptedException e){}
 						
-			wc.SaveScreenShot(wc.frm,"../final2/very_aggressive/"+wc.file_name+".png");
+			wc.SaveScreenShot(wc.frm,"../final2/butt_scooting/"+wc.file_name+".png");
 			wc.frm.dispose();
 		}
 		
@@ -251,6 +251,7 @@ public class Wikicloggy extends JPanel{
 		
 		super.paint(g);
 		//g.drawImage((Image)this.result_cloggy,0,0,null);
+		/*		
 		g.setColor(Color.red);
 		for (int i = 0; i<this.branch.size();i++){
 			
@@ -261,11 +262,13 @@ public class Wikicloggy extends JPanel{
 			
 			g.drawOval(this.end.get(i).y-1,this.end.get(i).x-1,3,3);
 		}
+		*/
 		
 		for (int i = 0; i<this.pp.size();i++){
+			
 			if(this.pp.get(i).tag.equals("head")){	
-				g.setColor(Color.orange);		
-				g.drawOval(this.pp.get(i).x-1,this.pp.get(i).y-1,3,3);
+				//g.setColor(Color.orange);		
+				//g.drawOval(this.pp.get(i).x-1,this.pp.get(i).y-1,3,3);
 				g.setColor(Color.white);		
 				g.drawLine(this.pp.get(i).x,this.pp.get(i).y,this.pp.get(i).x,this.pp.get(i).y);
 			}	
@@ -273,12 +276,12 @@ public class Wikicloggy extends JPanel{
 				g.setColor(Color.white);
 				g.drawLine(this.pp.get(i).x,this.pp.get(i).y,this.pp.get(i).x,this.pp.get(i).y);
 			}	
-		}
+		}/*
 		g.setColor(Color.pink);
 		g.drawOval(this.left-1,this.top-1,3,3);
 		g.drawOval(this.left-1,this.bottom-1,3,3);
 		g.drawOval(this.right-1,this.top-1,3,3);
-		g.drawOval(this.right-1,this.bottom-1,3,3);
+		g.drawOval(this.right-1,this.bottom-1,3,3);*/
 
 		
 	
