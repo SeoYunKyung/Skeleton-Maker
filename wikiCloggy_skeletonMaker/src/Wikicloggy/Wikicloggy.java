@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -129,10 +126,15 @@ public class Wikicloggy extends JPanel{
 			ImageIcon ic = new ImageIcon(wc.result_cloggy);
 			JLabel iblImage1 = new JLabel(ic);
 
-			wc.frm.add(iblImage1);
+			wc.setBackground(Color.BLACK);
+
+			//DrawPanel drawpanel = new DrawPanel();
+			//wc.frm.add(drawpanel);
+			
+			//wc.frm.add(iblImage1);
 			wc.frm.add(wc);
 												
-			wc.frm.setSize(wc.result_cloggy.getWidth(),wc.result_cloggy.getHeight()+20);
+			wc.frm.setSize(wc.result_cloggy.getWidth(),wc.result_cloggy.getHeight()+50);
 			wc.frm.setVisible(true);
 				
 			try{
@@ -247,28 +249,36 @@ public class Wikicloggy extends JPanel{
 	//show the points with oval
 	public void paint(Graphics g){
 		
-		g.drawImage((Image)this.result_cloggy,0,0,null);
+		super.paint(g);
+		//g.drawImage((Image)this.result_cloggy,0,0,null);
 		g.setColor(Color.red);
 		for (int i = 0; i<this.branch.size();i++){
 			
-			g.drawOval(this.branch.get(i).y,this.branch.get(i).x,5,5);
+			g.drawOval(this.branch.get(i).y-1,this.branch.get(i).x-1,3,3);
 		}
 		g.setColor(Color.cyan);
 		for (int i = 0; i<this.end.size();i++){
 			
-			g.drawOval(this.end.get(i).y,this.end.get(i).x,5,5);
+			g.drawOval(this.end.get(i).y-1,this.end.get(i).x-1,3,3);
 		}
-		g.setColor(Color.orange);
+		
 		for (int i = 0; i<this.pp.size();i++){
-			if(this.pp.get(i).tag.equals("head")){			
-				g.drawOval(this.pp.get(i).x,this.pp.get(i).y,5,5);
-			}		
+			if(this.pp.get(i).tag.equals("head")){	
+				g.setColor(Color.orange);		
+				g.drawOval(this.pp.get(i).x-1,this.pp.get(i).y-1,3,3);
+				g.setColor(Color.white);		
+				g.drawLine(this.pp.get(i).x,this.pp.get(i).y,this.pp.get(i).x,this.pp.get(i).y);
+			}	
+			else{
+				g.setColor(Color.white);
+				g.drawLine(this.pp.get(i).x,this.pp.get(i).y,this.pp.get(i).x,this.pp.get(i).y);
+			}	
 		}
 		g.setColor(Color.pink);
-		g.drawOval(this.left,this.top,5,5);
-		g.drawOval(this.left,this.bottom,5,5);
-		g.drawOval(this.right,this.top,5,5);
-		g.drawOval(this.right,this.bottom,5,5);
+		g.drawOval(this.left-1,this.top-1,3,3);
+		g.drawOval(this.left-1,this.bottom-1,3,3);
+		g.drawOval(this.right-1,this.top-1,3,3);
+		g.drawOval(this.right-1,this.bottom-1,3,3);
 
 		
 	
