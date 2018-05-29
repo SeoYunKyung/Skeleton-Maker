@@ -48,7 +48,7 @@ public class Wikicloggy extends JPanel{
 	ArrayList<Point> skeleton = new ArrayList<Point>(); //skeleton points 
 	BufferedImage result_cloggy = null; // result of skelelton image
 	
-	/*
+	
 	public Wikicloggy(String title) throws IOException {	
 		
 		File f = new File("../result/result.png");
@@ -61,92 +61,52 @@ public class Wikicloggy extends JPanel{
 		if(img==null){
 		   System.out.println("No Image\n");
 		   return;		
-		}*/
-	public Wikicloggy(String title,String filepath) throws IOException {	
-		
-		File f =new File(filepath);
-		this.img= ImageIO.read(f);
-		this.top =0;
-		this.bottom =0;
-		this.right =0;
-		this.left =0;		
-		
-		if(img==null){
-		   System.out.println("No Image\n");
-		   return;		
 		}
-				
-		
 	}
 
-	
-	public static ArrayList<HashMap<String,String>> getPhotoList(String path){
-		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
-		File dirFile = new File(path);
-		if(dirFile.exists() && dirFile.isDirectory()){
-			File[] fileList =dirFile.listFiles();
-			for (File tempFile : fileList) {
-				if(tempFile.isFile() && tempFile.length() > 0){
-					String tempPath = tempFile.getParent();
-					String fileFullName = tempFile.getName();
-					String onlyFileName = fileFullName.toLowerCase().substring(0,fileFullName.lastIndexOf("."));
-					HashMap<String, String> photo = new HashMap<String,String>();
-					photo.put("fullname",fileFullName);
-					photo.put("filename",onlyFileName);
-					list.add(photo);				
-				}
-			}
-		}
-		return list;
-	}
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
 		//File f = new File(args[0]);
-		ArrayList<HashMap<String,String>> list = getPhotoList(args[0]);
-		for(int i =0; i<list.size();i++){
-			System.out.println(list.get(i).get("fullname"));
-			Wikicloggy wc = new Wikicloggy("result_cloggy","../very_aggressive/"+list.get(i).get("fullname"));
-			wc.file_name = list.get(i).get("filename");		
-			//File rect_txt = new File("../result/result.txt");
 		
-			//Skeleton Pruning
-			ASkeletonPrunningOp ASIP = new ASkeletonPrunningOp(wc.img);
-			wc.result_cloggy = wc.make_skeleton(ASIP,wc.img);
+		Wikicloggy wc = new Wikicloggy("result_cloggy");		
+		//File rect_txt = new File("../result/result.txt");
+	
+		//Skeleton Pruning
+		ASkeletonPrunningOp ASIP = new ASkeletonPrunningOp(wc.img);
+		wc.result_cloggy = wc.make_skeleton(ASIP,wc.img);
 		
+		//wc.setHeadBox(rect_txt);
+		wc.getEachskeletonInfo(ASIP);
+		wc.makeSkeletonTextFile();			
+		
+		
+		//show each pts and skeleton of dog
+		wc.frm = new JFrame("dog skeleton");
+		ImageIcon ic = new ImageIcon(wc.result_cloggy);
+		JLabel iblImage1 = new JLabel(ic);
 
-			//wc.setHeadBox(rect_txt);
-			wc.getEachskeletonInfo(ASIP);
-			wc.makeSkeletonTextFile();			
-		
-		
-			//show each pts and skeleton of dog
-			wc.frm = new JFrame("dog skeleton");
-			ImageIcon ic = new ImageIcon(wc.result_cloggy);
-			JLabel iblImage1 = new JLabel(ic);
-
-			wc.setBackground(Color.BLACK);
-
-			//DrawPanel drawpanel = new DrawPanel();
-			//wc.frm.add(drawpanel);
+		wc.setBackground(Color.BLACK);
+		//DrawPanel drawpanel = new DrawPanel();
+		//wc.frm.add(drawpanel);
 			
-			//wc.frm.add(iblImage1);
-			wc.frm.add(wc);
+		//wc.frm.add(iblImage1);
+		wc.frm.add(wc);
 												
-			wc.frm.setSize(wc.result_cloggy.getWidth(),wc.result_cloggy.getHeight()+50);
-			wc.frm.setVisible(true);
+		wc.frm.setSize(wc.result_cloggy.getWidth(),wc.result_cloggy.getHeight()+50);
+		wc.frm.setVisible(true);
 				
-			try{
-				Thread.sleep(1000);
-			}catch(InterruptedException e){}
+		try{
+			Thread.sleep(1000);
+		}catch(InterruptedException e){}
 						
-			wc.SaveScreenShot(wc.frm,"../final2/very_aggressive/"+wc.file_name+".png");
-			wc.frm.dispose();
-		}
+		wc.SaveScreenShot(wc.frm,"../result/skeleton/result.png");
+		wc.frm.dispose();
+	}
 		
 	
-	}
+	
 
 	public void getEachskeletonInfo(ASkeletonPrunningOp ASIP){
 		//Take BranchPts from asima
