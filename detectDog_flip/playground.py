@@ -39,7 +39,8 @@ doghead_rect = dd.getDogPartRect(dets_pop, img)
 
 dogAreaImage = imageProcessor.drawRectangle(img, rect)
 #dogAreaImage = imageProcessor.drawRectangle(dogAreaImage)
-if(!dd.isLeft):
+if(dd.isLeft):
+else:
 	dogAreaImage = cv2.flip(dogAreaImage,1)
 
 dogAreaImage = cv2.cvtColor(dogAreaImage, cv2.COLOR_BGR2RGB)
